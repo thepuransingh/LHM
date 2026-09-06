@@ -382,7 +382,7 @@
 
   <section class="bg-2" id="top-songs">
     <div class="wrap">
-      <div class="sec-head"><span class="label">Start here</span><h2>Top 3 Songs</h2><p>The three ballads people come back to. <span class="placeholder-tag">Sample descriptions — personalize</span></p></div>
+      <div class="sec-head"><span class="label">Start here</span><h2>Top 3 Songs</h2><p>The three ballads people come back to.</p></div>
       <div class="song-grid" id="songGrid"></div>
     </div>
   </section>
@@ -506,8 +506,8 @@
           <p>One email per release. No spam, ever.</p>
         </div>
         <form class="subscribe" id="subForm">
-          <input type="text" required placeholder="Your name" aria-label="Name">
-          <input type="email" required placeholder="you@email.com" aria-label="Email address">
+          <input type="text" id="subName" required placeholder="Your name" aria-label="Name">
+          <input type="email" id="subEmail" required placeholder="you@email.com" aria-label="Email address">
           <button type="submit">Join the list</button>
           <span class="form-note" id="subNote"></span>
         </form>
@@ -712,7 +712,12 @@
   // demo form confirmations (no backend — prototype only)
   document.getElementById('subForm').addEventListener('submit', function(e){
     e.preventDefault();
-    document.getElementById('subNote').textContent = 'You’re on the list — welcome.';
+    var name = document.getElementById('subName').value;
+    var email = document.getElementById('subEmail').value;
+    var subject = encodeURIComponent('New Subscriber');
+    var body = encodeURIComponent('New mailing list signup from the website:\n\nName: ' + name + '\nEmail: ' + email);
+    window.location.href = 'mailto:contact@lovewaveharmonymusic.com?subject=' + subject + '&body=' + body;
+    document.getElementById('subNote').textContent = 'Almost done — send the email that just opened to finish signing up.';
   });
 })();
 </script>
