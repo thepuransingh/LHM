@@ -59,14 +59,19 @@ Content hierarchy, top to bottom:
 - **Blog/news:** studio updates, playlist placements, tour news, process posts, collaborator spotlights — written once, repurposed into newsletter/social
 - **SEO:** `MusicGroup`/`MusicAlbum`/`MusicRecording` schema, long-tail genre/mood keywords, alt text everywhere, internal linking across songs/albums/blog
 
-## 5. Visual Design Direction
+## 5. Visual Design Direction — confirmed: Soul/Motown
 
-**Direction A — Tidal:** paper `#EEF1EE`, ink `#17211F`, wave-teal `#166A6E`, love-rose `#C13B52`, harmony-gold `#A9782A`. Cool, calm base with warmth reserved for one accent — fits indie/alt, dream-pop, soul, acoustic.
+The brand is original Soul-Motown ballads, not generic indie-pop, so the direction locks to a cinematic, late-night, vinyl-era identity rather than a light neutral palette.
 
-**Direction B — Nightwave:** midnight plum `#1A1420`, bone `#F4EFE9`, amber `#E3A94C`, dusk violet `#7C6BA8`, slate teal `#3E5F63`. Dark-mode-first — fits electronic, R&B, atmospheric production.
+**Palette:** deep midnight plum `#1A1025` (main background), warm charcoal `#2A1E35` (cards, album sections), warm cream `#F7F0E6` (headlines/body text), dusty mauve `#C9B8C7` (muted text, captions), vintage gold `#D4A85C` (buttons, links, hover states, player progress bar — midnight text on gold for contrast). Plum reads as night and intimacy, gold as Motown vinyl luxury, cream keeps it readable — this is a deliberately single, dark, cinematic world rather than a page with a light/dark toggle.
 
-- **Typography:** one characterful display face + a clean restrained sans for body — never the WordPress-default Roboto/Open Sans pairing. Reserve a monospace face for data-like details (dates, credits, tracklist numbers).
-- **Layout:** editorial, art-forward (closer to a streaming platform's featured page than a business template); asymmetric discography grids; one recurring graphic motif (a waveform line) instead of stock icons; one consistent photo treatment sitewide.
+**Typography:** Playfair Display for headlines and song titles (serif, romantic, editorial — 48–64px desktop, 32px mobile), Manrope for body/UI (clean sans, 16–18px). Two fonts only.
+
+**Motifs:** a heart-and-waveform mark for the logo (a soundwave line running through a heart outline — literalizes "Lovewave"); vinyl-record cover art (jacket + exposed disc with grooves and a gold label) as the recurring visual unit for every album/song, so the catalog reads as a record collection rather than a stock image grid; thin gold rule dividers and sunburst-ray backgrounds borrowed from vintage Motown concert posters; a spinning-disc animation tied to the play state instead of a generic progress spinner.
+
+**Hero imagery:** cinematic and blurred, darkened ~60% for text contrast, fixed on scroll with a plum-to-transparent gradient at the base — a vintage mic with bokeh lights or a slow-dance silhouette, never a bright stock-photo smile. Every other page stays flat plum with no imagery, to keep load times down.
+
+- **Layout:** editorial, art-forward, asymmetric where it earns it; discography split into a small "Featured" set (large art) above a filterable "Complete Collection" grid (by mood: Romantic / Heartbreak / Devotional) rather than 17 equal tiles.
 
 ## 6. Technical Recommendations
 
