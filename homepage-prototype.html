@@ -46,7 +46,7 @@
   .sunburst{position:absolute; pointer-events:none;}
 
   /* ---- header ---- */
-  header.site-nav{position:sticky; top:0; z-index:40; background:rgba(26,16,37,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);}
+  header.site-nav{position:sticky; top:0; z-index:40; background:rgba(26,16,37,.82); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);}
   header.site-nav .row{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:1140px; margin:0 auto; gap:20px;}
   .brand{display:flex; align-items:center; gap:11px;}
   .brand .mark{width:30px; height:30px; flex:0 0 auto; color:var(--gold); border-radius:50%; overflow:hidden; display:inline-block;}
@@ -60,7 +60,28 @@
   .icon-link{color:var(--ink-soft); transition:color .15s; display:flex;}
   .icon-link:hover{color:var(--gold);}
   .icon-link svg{width:19px; height:19px;}
-  @media (max-width:860px){ .nav-links{display:none;} }
+  .nav-toggle{
+    display:none; width:38px; height:38px; flex:0 0 auto; border:1px solid var(--line); border-radius:8px;
+    background:transparent; color:var(--ink); align-items:center; justify-content:center;
+  }
+  .nav-toggle:hover{border-color:var(--gold); color:var(--gold);}
+  .nav-toggle .icon-close{display:none;}
+  .nav-toggle.open .icon-menu{display:none;}
+  .nav-toggle.open .icon-close{display:block;}
+  .mobile-nav{display:flex; flex-direction:column; padding:6px 20px 18px; border-top:1px solid var(--line);}
+  .mobile-nav[hidden]{display:none;}
+  .mobile-nav a{padding:13px 0; font-size:.95rem; font-weight:600; color:var(--ink-soft); border-bottom:1px solid var(--line);}
+  .mobile-nav a:hover{color:var(--gold);}
+  .mobile-nav .mobile-platforms{display:flex; align-items:center; gap:18px; padding-top:14px;}
+  .mobile-nav .mobile-platforms .icon-link{color:var(--ink-soft);}
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .nav-right .icon-link, .nav-right .btn{display:none;}
+    .nav-toggle{display:flex;}
+    header.site-nav .row{padding:14px 20px;}
+  }
+  @media (min-width:861px){ .mobile-nav{display:none !important;} }
+  @media (max-width:420px){ .brand-text .tag{display:none;} }
 
   /* ---- hero ---- */
   .hero{position:relative; padding:96px 0 88px; overflow:hidden; isolation:isolate;}
@@ -153,7 +174,8 @@
 
   /* ---- top 3 songs ---- */
   .song-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media (max-width:820px){ .song-grid{grid-template-columns:1fr;} }
+  @media (max-width:820px){ .song-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .song-grid{grid-template-columns:1fr;} }
   .song-card{background:var(--bg-2); border:1px solid var(--line); border-radius:8px; padding:22px; display:flex; gap:16px; align-items:flex-start;}
   .song-disc{width:56px; height:56px; flex:0 0 auto; cursor:pointer; border-radius:50%; overflow:hidden; border:1px solid var(--line);}
   .song-disc img{width:100%; height:100%; object-fit:cover; display:block;}
@@ -165,7 +187,8 @@
 
   /* ---- discography ---- */
   .featured-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-bottom:56px;}
-  @media (max-width:820px){ .featured-grid{grid-template-columns:1fr;} }
+  @media (max-width:820px){ .featured-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .featured-grid{grid-template-columns:1fr;} }
   .featured-grid .cap{margin-top:14px;}
   .featured-grid .cap h4{font-size:1.05rem; line-height:1.3; min-height:2.6em; margin:0 0 4px;}
   .featured-grid .cap .y{font-size:.8rem; color:var(--ink-soft);}
@@ -186,7 +209,8 @@
 
   /* ---- video ---- */
   .video-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media (max-width:820px){ .video-grid{grid-template-columns:1fr;} }
+  @media (max-width:820px){ .video-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .video-grid{grid-template-columns:1fr;} }
   .video-frame{
     aspect-ratio:16/9; border-radius:8px; border:1px solid var(--line); position:relative; overflow:hidden;
     display:block; background-size:cover; background-position:center 25%; background-color:var(--bg-2);
@@ -205,7 +229,8 @@
 
   /* ---- playlists ---- */
   .mood-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media (max-width:820px){ .mood-grid{grid-template-columns:1fr;} }
+  @media (max-width:820px){ .mood-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .mood-grid{grid-template-columns:1fr;} }
   .mood-card{background:var(--bg-2); border:1px solid var(--line); border-radius:8px; padding:26px;}
   .mood-card h4{font-size:1.15rem; margin-bottom:8px;}
   .mood-card p{color:var(--ink-soft); font-size:.88rem; margin-bottom:16px;}
@@ -244,6 +269,7 @@
   }
   form.subscribe button{padding:13px 22px; border-radius:3px; border:none; background:var(--gold); color:var(--gold-ink); font-weight:700;}
   .form-note{font-size:11.5px; margin-top:10px; color:var(--gold); width:100%;}
+  @media (max-width:480px){ .capture-card{padding:28px 22px;} form.subscribe{width:100%;} form.subscribe input{min-width:0; flex:1 1 140px;} }
 
   /* ---- footer ---- */
   footer{padding:56px 0 34px; border-top:1px solid var(--line);}
@@ -283,6 +309,7 @@
   }
   .lyrics-body .lyrics-note{font-size:.82rem; color:var(--ink-soft); line-height:1.6;}
   .lyrics-body .lyrics-note a{color:var(--gold); font-weight:700;}
+  @media (max-width:480px){ .lyrics-modal{padding:30px 22px;} }
 
   /* ---- privacy policy modal ---- */
   .policy-overlay{
@@ -313,6 +340,7 @@
   .policy-body .ip-block{margin-top:32px; padding-top:26px; border-top:1px solid var(--line);}
   .ip-notice{max-width:900px; opacity:.75;}
   .ip-notice a{text-decoration:underline;}
+  @media (max-width:480px){ .policy-overlay{padding:24px 14px;} .policy-modal{padding:32px 22px 40px;} }
 </style>
 
 <header class="site-nav">
@@ -340,8 +368,29 @@
         <svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5.5" width="19" height="13" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor"/></svg>
       </a>
       <a class="btn btn-gold" href="https://open.spotify.com/artist/5fDZkrsPKVnvQgG6z6aLtE?si=YNe736DyRii_4UAdUdaXOw" target="_blank" rel="noopener">Follow</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg class="icon-menu" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg class="icon-close" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </div>
+  <nav class="mobile-nav" id="mobileNav" hidden>
+    <a href="#top">Home</a>
+    <a href="#music">Music</a>
+    <a href="#videos">Videos</a>
+    <a href="#playlists">Playlists</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <div class="mobile-platforms">
+      <a class="icon-link" href="https://open.spotify.com/artist/5fDZkrsPKVnvQgG6z6aLtE?si=YNe736DyRii_4UAdUdaXOw" target="_blank" rel="noopener" aria-label="Spotify">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 9.6c3.6-1 7.7-.6 10.7 1.2M7 12.7c3-.8 6.4-.5 9.1 1M7.5 15.7c2.4-.6 5.1-.4 7.2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </a>
+      <a class="icon-link" href="https://www.youtube.com/@LovewaveHarmonyMusic" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5.5" width="19" height="13" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor"/></svg>
+      </a>
+      <a class="btn btn-gold" href="https://open.spotify.com/artist/5fDZkrsPKVnvQgG6z6aLtE?si=YNe736DyRii_4UAdUdaXOw" target="_blank" rel="noopener">Follow</a>
+    </div>
+  </nav>
 </header>
 
 <section class="hero" id="top">
@@ -841,6 +890,30 @@
     document.querySelectorAll('#collectionGrid .item').forEach(function(el){
       el.classList.toggle('hidden', f !== 'all' && el.getAttribute('data-mood') !== f);
     });
+  });
+
+  // mobile nav toggle
+  var navToggle = document.getElementById('navToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  navToggle.addEventListener('click', function(){
+    var open = mobileNav.hidden;
+    mobileNav.hidden = !open;
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  mobileNav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mobileNav.hidden = true;
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  window.addEventListener('resize', function(){
+    if (window.innerWidth > 860 && !mobileNav.hidden){
+      mobileNav.hidden = true;
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
   });
 
   // mini player show/hide
