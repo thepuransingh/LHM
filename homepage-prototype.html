@@ -283,6 +283,36 @@
   }
   .lyrics-body .lyrics-note{font-size:.82rem; color:var(--ink-soft); line-height:1.6;}
   .lyrics-body .lyrics-note a{color:var(--gold); font-weight:700;}
+
+  /* ---- privacy policy modal ---- */
+  .policy-overlay{
+    position:fixed; inset:0; z-index:110; background:rgba(16,10,24,.85);
+    display:flex; align-items:flex-start; justify-content:center; padding:50px 20px; overflow-y:auto;
+  }
+  .policy-overlay[hidden]{display:none;}
+  .policy-modal{
+    background:var(--bg-2); border:1px solid var(--gold); border-radius:10px; max-width:720px; width:100%;
+    padding:44px 40px 50px; position:relative; box-shadow:var(--shadow); margin-bottom:50px;
+  }
+  .policy-close{
+    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    background:transparent; color:var(--ink-soft); display:flex; align-items:center; justify-content:center;
+  }
+  .policy-close:hover{border-color:var(--gold); color:var(--gold);}
+  .policy-body h3{font-size:1.7rem; margin-bottom:6px; padding-right:40px;}
+  .policy-body .policy-updated{font-family:var(--sans); font-size:.82rem; color:var(--ink-soft); margin-bottom:30px;}
+  .policy-body h4{
+    font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold);
+    font-weight:700; margin:28px 0 12px;
+  }
+  .policy-body h4:first-of-type{margin-top:0;}
+  .policy-body p{color:var(--ink); font-size:.92rem; line-height:1.7; margin:0 0 12px; max-width:none;}
+  .policy-body ul{margin:0 0 12px; padding-left:1.3em;}
+  .policy-body li{color:var(--ink); font-size:.92rem; line-height:1.7; margin-bottom:6px;}
+  .policy-body a{color:var(--gold); font-weight:700;}
+  .policy-body .ip-block{margin-top:32px; padding-top:26px; border-top:1px solid var(--line);}
+  .ip-notice{max-width:900px; opacity:.75;}
+  .ip-notice a{text-decoration:underline;}
 </style>
 
 <header class="site-nav">
@@ -556,14 +586,15 @@
           <a href="https://music.amazon.com/artists/B0GRMDDGT2/lovewave-harmony-music" target="_blank" rel="noopener">Amazon Music</a>
         </div>
         <div class="col"><h5>Site</h5>
-          <a href="#music">Music</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#">Privacy</a>
+          <a href="#music">Music</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#" data-privacy>Privacy</a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
       <div>
-        <small>© 2026 Lovewave Harmony Music | Originals | contact@lovewaveharmonymusic.com | Privacy</small>
+        <small>© 2026 Lovewave Harmony Music | Originals | contact@lovewaveharmonymusic.com | <a href="#" data-privacy style="color:inherit; text-decoration:underline;">Privacy</a></small>
         <div class="legal-line">All songs are original compositions. AI tools used in production arrangement.</div>
+        <div class="legal-line ip-notice">All music, songs, lyrics, melodies, arrangements, sound recordings, artwork, videos, images, text, and designs on this website are original works owned exclusively by Lovewave Harmony Music. Copyright © 2026 Lovewave Harmony Music. All rights reserved. No part of this website or its music catalogue may be copied, reproduced, distributed, performed, broadcast, uploaded, sampled, remixed, translated, adapted, synchronized to video, used to train AI models, or exploited in any form or medium without prior express written permission. Some compositions were created with AI assistance as a production tool; to the fullest extent permitted by law, all rights in those original compositions and recordings are claimed and owned by Lovewave Harmony Music. Unauthorized use is strictly prohibited and may result in takedown notices and legal action. To request permission or a license, contact <a href="mailto:contact@lovewaveharmonymusic.com" style="color:var(--gold);">contact@lovewaveharmonymusic.com</a>.</div>
       </div>
       <div class="socials">
         <a href="https://www.facebook.com/LovewaveHarmony/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M14 8.5h2V5h-2c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v6h3v-6H16l.5-3h-3V9c0-.3.2-.5.5-.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></a>
@@ -582,6 +613,106 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>
     <div id="lyricsBody"></div>
+  </div>
+</div>
+
+<div class="policy-overlay" id="privacyOverlay" hidden role="dialog" aria-modal="true" aria-label="Privacy Policy">
+  <div class="policy-modal">
+    <button class="policy-close" id="privacyClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div class="policy-body">
+      <h3>Privacy Policy</h3>
+      <div class="policy-updated">Lovewave Harmony Music &middot; Last Updated: September 6, 2026</div>
+
+      <h4>1. Who We Are</h4>
+      <p>Lovewave Harmony Music ("we," "us," "our") is an independent original soul music project. This website shares our music, videos, and updates.</p>
+      <p>Data Controller: Lovewave Harmony Music<br>Contact: <a href="mailto:contact@lovewaveharmonymusic.com">contact@lovewaveharmonymusic.com</a><br>Location: Stockholm, Sweden</p>
+      <p>If you have privacy questions, email us at the address above.</p>
+
+      <h4>2. What Data We Collect</h4>
+      <p>We collect only what we need to run this site:</p>
+      <p><strong>a) Information you give us directly:</strong></p>
+      <ul>
+        <li>Email address when you sign up for our newsletter / updates</li>
+        <li>Name if you choose to provide it</li>
+        <li>Messages you send via contact forms or email</li>
+      </ul>
+      <p><strong>b) Information collected automatically:</strong></p>
+      <ul>
+        <li>Basic analytics data via Google Analytics: pages visited, time on page, device type, browser type, approximate location (city/country level), and how you found us</li>
+        <li>Cookie preferences</li>
+      </ul>
+      <p>We do not collect payment details, as we do not sell directly on this site. We do not intentionally collect sensitive personal data.</p>
+
+      <h4>3. How We Use Your Data and Lawful Basis Under GDPR</h4>
+      <ul>
+        <li>To send newsletter updates and new music alerts — Legal basis: Consent. You can unsubscribe anytime via the link in every email.</li>
+        <li>To understand site traffic and improve content via Google Analytics, Spotify for Artists, and YouTube analytics — Legal basis: Legitimate interest in improving our site. IP addresses are anonymized where possible.</li>
+        <li>To respond to messages and permission requests — Legal basis: Legitimate interest.</li>
+        <li>To keep the site secure and prevent abuse — Legal basis: Legitimate interest.</li>
+      </ul>
+      <p>We will never sell your email or personal data.</p>
+
+      <h4>4. Email Signup</h4>
+      <p>If you join our email list, we store your email to send you new releases, videos, and news. Provider: Mailchimp. Your data is stored by that provider on our behalf. Unsubscribe anytime and we will delete you from the marketing list promptly.</p>
+
+      <h4>5. Third-Party Services and Embeds</h4>
+      <p>This site embeds content from third parties that may collect their own data under their own policies:</p>
+      <ul>
+        <li>YouTube embeds for music videos — YouTube / Google may set cookies and track views</li>
+        <li>Spotify embeds / links — Spotify may track listening interaction</li>
+        <li>Google Analytics — measures site traffic</li>
+      </ul>
+      <p>We do not control those third parties. Please review their privacy policies before interacting.</p>
+
+      <h4>6. Cookies</h4>
+      <p>We use:</p>
+      <ul>
+        <li>Strictly necessary cookies to make the site work</li>
+        <li>Analytics cookies to understand visits</li>
+        <li>Third-party cookies from YouTube / Spotify when you play embedded content</li>
+      </ul>
+      <p>You can block cookies in your browser settings. Parts of embeds may not work if you do.</p>
+
+      <h4>7. Data Sharing</h4>
+      <p>We share data only with:</p>
+      <ul>
+        <li>Email service provider to send newsletters</li>
+        <li>Analytics providers to measure traffic</li>
+        <li>Authorities if required by law</li>
+      </ul>
+      <p>We do not share with advertisers or data brokers.</p>
+
+      <h4>8. Data Retention</h4>
+      <ul>
+        <li>Newsletter emails: kept until you unsubscribe, then deleted from marketing list within 30 days</li>
+        <li>Contact messages: kept up to 12 months</li>
+        <li>Analytics data: kept up to 26 months, then auto-deleted / aggregated</li>
+      </ul>
+
+      <h4>9. Your Rights Under GDPR</h4>
+      <p>If you are in the EU/EEA, you have the right to: access, correct, delete, restrict, object to processing, data portability, and withdraw consent at any time.</p>
+      <p>To exercise any right, email: <a href="mailto:contact@lovewaveharmonymusic.com">contact@lovewaveharmonymusic.com</a>. We respond within 30 days.</p>
+      <p>You also have the right to complain to your local Data Protection Authority. We hope you contact us first so we can help.</p>
+
+      <h4>10. Security</h4>
+      <p>We use SSL, limited access, and reputable providers to protect your data. No system is 100% secure, but we take reasonable steps to protect it.</p>
+
+      <h4>11. Children</h4>
+      <p>This site is not directed to children under 16. We do not knowingly collect data from children. If you believe a child provided data, contact us and we will delete it.</p>
+
+      <h4>12. Changes to This Policy</h4>
+      <p>We may update this policy when we add features. The latest version will always be on this page with the updated date.</p>
+
+      <div class="ip-block">
+        <h4>Intellectual Property — All Rights Reserved</h4>
+        <p>All music, songs, lyrics, melodies, arrangements, sound recordings, artwork, videos, images, text, and designs on this website are original works owned exclusively by Lovewave Harmony Music. Copyright &copy; 2026 Lovewave Harmony Music. All rights reserved.</p>
+        <p>No part of this website or its music catalogue may be copied, reproduced, distributed, performed, broadcast, uploaded, sampled, remixed, translated, adapted, synchronized to video, used to train AI models, or exploited in any form or medium, whether commercial or non-commercial, without prior express written permission from Lovewave Harmony Music.</p>
+        <p>Some compositions were created with AI assistance as a production tool. To the fullest extent permitted by law, all rights in those original compositions and recordings are claimed and owned by Lovewave Harmony Music.</p>
+        <p>Unauthorized use is strictly prohibited and may result in takedown notices and legal action. To request permission or a license, contact: <a href="mailto:contact@lovewaveharmonymusic.com">contact@lovewaveharmonymusic.com</a>.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -779,6 +910,17 @@
   document.getElementById('lyricsClose').addEventListener('click', closeLyrics);
   lyricsOverlay.addEventListener('click', function(e){ if (e.target === lyricsOverlay) closeLyrics(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !lyricsOverlay.hidden) closeLyrics(); });
+
+  // privacy policy modal
+  var privacyOverlay = document.getElementById('privacyOverlay');
+  function openPrivacy(){ privacyOverlay.hidden = false; privacyOverlay.scrollTop = 0; }
+  function closePrivacy(){ privacyOverlay.hidden = true; }
+  document.addEventListener('click', function(e){
+    if (e.target.closest('[data-privacy]')){ e.preventDefault(); openPrivacy(); }
+  });
+  document.getElementById('privacyClose').addEventListener('click', closePrivacy);
+  privacyOverlay.addEventListener('click', function(e){ if (e.target === privacyOverlay) closePrivacy(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !privacyOverlay.hidden) closePrivacy(); });
 
   // demo form confirmations (no backend — prototype only)
   document.getElementById('subForm').addEventListener('submit', function(e){
