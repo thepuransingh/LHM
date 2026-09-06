@@ -573,7 +573,7 @@
             <p>No covers. No noise. Just honest songs about the moments love leaves behind — <em>Where Our Dreams Become One</em>, <em>Something In You Feels Like Home</em>, <em>When Beauty Stole My Heart</em>.</p>
             <p>Every track is an original composition, produced with modern tools including AI-assisted arrangement, then human-curated for emotion, story, and soul.</p>
             <p>Press play. Stay for the quiet part. That's where the love lives.</p>
-            <div class="cta-row"><a href="#" class="btn btn-ghost">Press Kit</a></div>
+            <div class="cta-row"><a href="#" class="btn btn-ghost" data-license>License</a></div>
             <p class="trust-line">© Lovewave Harmony Music. All songs are original compositions. AI tools used in production arrangement.</p>
           </div>
         </div>
@@ -758,6 +758,41 @@
         <p>Some compositions were created with AI assistance as a production tool. To the fullest extent permitted by law, all rights in those original compositions and recordings are claimed and owned by Lovewave Harmony Music.</p>
         <p>Unauthorized use is strictly prohibited and may result in takedown notices and legal action. To request permission or a license, contact: <a href="mailto:contact@lovewaveharmonymusic.com">contact@lovewaveharmonymusic.com</a>.</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="policy-overlay" id="licenseOverlay" hidden role="dialog" aria-modal="true" aria-label="Music Licensing">
+  <div class="policy-modal">
+    <button class="policy-close" id="licenseClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div class="policy-body">
+      <h3>Music Licensing</h3>
+      <div class="policy-updated">Lovewave Harmony Music</div>
+
+      <p>All songs on this site, including lyrics, melodies, and recordings released as Lovewave Harmony Music, are original works owned by Lovewave Harmony Music.</p>
+      <p>&copy; 2026 Lovewave Harmony Music. All rights reserved.</p>
+      <p>These tracks are created by singer-songwriter Ankita Sinha with AI assistance in production. No samples, covers, or third-party loops are used without rights.</p>
+
+      <h4>1. What You Can Do Without Asking</h4>
+      <p>Listen on Spotify, YouTube, and this website for personal enjoyment. Share links to Spotify / YouTube with credit.</p>
+
+      <h4>2. What You Cannot Do Without Written Permission</h4>
+      <p>You may not copy, reproduce, sample, remix, re-upload, distribute, perform publicly for commercial use, sync to video / film / reels / ads / games, or use any song to train AI models without a written license from us.</p>
+
+      <h4>3. Licenses Available on Request</h4>
+      <ul>
+        <li><strong>Creator License:</strong> Use in 1 YouTube video, Instagram Reel, or podcast with credit</li>
+        <li><strong>Wedding / Personal Event License:</strong> Play at your ceremony / reception</li>
+        <li><strong>Indie Film / Business Sync:</strong> Quote-based — tell us your project and audience size</li>
+      </ul>
+      <p>All licenses require credit: <em>Music: [Song Title] by Lovewave Harmony Music</em></p>
+
+      <h4>4. How to Request a License</h4>
+      <p>Email: <a href="mailto:contact@lovewaveharmonymusic.com?subject=License Request">contact@lovewaveharmonymusic.com</a><br>Subject: License Request — [Song Title]</p>
+      <p>Include: 1) Song title, 2) Where it will be used (link), 3) How long / audience size</p>
+      <p>We reply within 3–5 business days. Use is only allowed after you receive written approval.</p>
     </div>
   </div>
 </div>
@@ -991,6 +1026,17 @@
   document.getElementById('privacyClose').addEventListener('click', closePrivacy);
   privacyOverlay.addEventListener('click', function(e){ if (e.target === privacyOverlay) closePrivacy(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !privacyOverlay.hidden) closePrivacy(); });
+
+  // music licensing modal
+  var licenseOverlay = document.getElementById('licenseOverlay');
+  function openLicense(){ licenseOverlay.hidden = false; licenseOverlay.scrollTop = 0; }
+  function closeLicense(){ licenseOverlay.hidden = true; }
+  document.addEventListener('click', function(e){
+    if (e.target.closest('[data-license]')){ e.preventDefault(); openLicense(); }
+  });
+  document.getElementById('licenseClose').addEventListener('click', closeLicense);
+  licenseOverlay.addEventListener('click', function(e){ if (e.target === licenseOverlay) closeLicense(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !licenseOverlay.hidden) closeLicense(); });
 
   // demo form confirmations (no backend — prototype only)
   document.getElementById('subForm').addEventListener('submit', function(e){
