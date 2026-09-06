@@ -258,6 +258,31 @@
   .foot-bottom .socials svg{width:15px; height:15px;}
   .foot-bottom small{color:var(--ink-soft); font-size:.8rem;}
   .legal-line{font-size:.78rem; color:var(--ink-soft); margin-top:6px;}
+
+  /* ---- lyric excerpt modal ---- */
+  .lyrics-overlay{position:fixed; inset:0; z-index:100; background:rgba(16,10,24,.82); display:flex; align-items:center; justify-content:center; padding:24px;}
+  .lyrics-overlay[hidden]{display:none;}
+  .lyrics-modal{
+    background:var(--bg-2); border:1px solid var(--gold); border-radius:10px; max-width:520px; width:100%;
+    max-height:85vh; overflow-y:auto; padding:38px 36px; position:relative; box-shadow:var(--shadow);
+  }
+  .lyrics-close{
+    position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
+    background:transparent; color:var(--ink-soft); display:flex; align-items:center; justify-content:center;
+  }
+  .lyrics-close:hover{border-color:var(--gold); color:var(--gold);}
+  .lyrics-body .eyebrow-tag{margin-bottom:10px; display:block;}
+  .lyrics-body h3{font-size:1.4rem; margin-bottom:4px; padding-right:36px;}
+  .lyrics-body .lyrics-meta{font-size:.8rem; color:var(--ink-soft); margin-bottom:24px;}
+  .lyrics-body .chorus-label{
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:10px; display:block;
+  }
+  .lyrics-body .chorus-text{
+    font-family:var(--serif); font-style:italic; font-size:1.15rem; line-height:1.7; color:var(--ink);
+    border-left:3px solid var(--gold); padding-left:20px; margin:0 0 22px;
+  }
+  .lyrics-body .lyrics-note{font-size:.82rem; color:var(--ink-soft); line-height:1.6;}
+  .lyrics-body .lyrics-note a{color:var(--gold); font-weight:700;}
 </style>
 
 <header class="site-nav">
@@ -373,7 +398,7 @@
           </div>
           <div class="cta-row">
             <a href="https://open.spotify.com/track/55yAZ9uPeulOmbNtXfTVOO?si=c46f0744b788410d" target="_blank" rel="noopener" class="btn btn-gold">Play on Spotify</a>
-            <a href="#" class="btn btn-ghost">Read the lyrics</a>
+            <a href="#" class="btn btn-ghost" data-lyrics="beauty">Read the lyrics</a>
           </div>
         </div>
       </div>
@@ -551,6 +576,15 @@
   </div>
 </footer>
 
+<div class="lyrics-overlay" id="lyricsOverlay" hidden role="dialog" aria-modal="true" aria-label="Song lyric excerpt">
+  <div class="lyrics-modal">
+    <button class="lyrics-close" id="lyricsClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div id="lyricsBody"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   var GOLD = '#D4A85C', VINYL = '#100A18', BG2 = '#2A1E35', BG3 = '#352842';
@@ -607,9 +641,9 @@
 
   // top 3 songs data
   var topSongs = [
-    {title:'When Beauty Stole My Heart', mood:'Romantic', desc:'A slow Rhodes-and-strings ballad about the moment devotion stops being a choice.', img:IMG_BEAUTY},
-    {title:'Where Our Dreams Become One', mood:'Devotional', desc:'A vow set to a Motown backbeat — two futures folding into a single promise.', img:IMG_DREAMS},
-    {title:'Something In You Feels Like Home', mood:'Heartbreak', desc:'For the ones who found peace on the other side of losing someone first.', img:IMG_HOME}
+    {title:'When Beauty Stole My Heart', mood:'Romantic', desc:'A slow Rhodes-and-strings ballad about the moment devotion stops being a choice.', img:IMG_BEAUTY, lyricsKey:'beauty'},
+    {title:'Where Our Dreams Become One', mood:'Devotional', desc:'A vow set to a Motown backbeat — two futures folding into a single promise.', img:IMG_DREAMS, lyricsKey:'dreams'},
+    {title:'Something In You Feels Like Home', mood:'Heartbreak', desc:'For the ones who found peace on the other side of losing someone first.', img:IMG_HOME, lyricsKey:'home'}
   ];
   var songGrid = document.getElementById('songGrid');
   var featuredGrid = document.getElementById('featuredGrid');
@@ -619,7 +653,7 @@
     card.className = 'song-card';
     card.innerHTML =
       '<div class="song-disc" id="'+discId+'"><img src="'+s.img+'" alt="'+s.title+' cover art"></div>' +
-      '<div><span class="mood">'+s.mood+'</span><h4>'+s.title+'</h4><p>'+s.desc+'</p><a class="lyrics-link" href="#">Read lyrics →</a></div>';
+      '<div><span class="mood">'+s.mood+'</span><h4>'+s.title+'</h4><p>'+s.desc+'</p><a class="lyrics-link" href="#" data-lyrics="'+s.lyricsKey+'">Read lyrics →</a></div>';
     songGrid.appendChild(card);
 
     var feat = document.createElement('div');
@@ -708,6 +742,43 @@
     var wrapEl = document.getElementById('song-disc-'+i);
     wrapEl.addEventListener('click', function(){ wrapEl.classList.toggle('spinning'); });
   });
+
+  // lyric excerpts — chorus only, not full lyric sheets
+  var LYRIC_EXCERPTS = {
+    beauty: {
+      title: 'When Beauty Stole My Heart',
+      chorus: 'When beauty stole my heart,<br>It tore my world apart.<br>A whisper from your face<br>Can shake my every place.<br>If madness takes its start,<br>Let no one play their part—<br>Just know it\'s not my fault…<br>When beauty stole my heart.'
+    },
+    dreams: {
+      title: 'Where Our Dreams Become One',
+      chorus: 'Oh, where our dreams become one, love,<br>Where the road feels soft and wide.<br>Where the storms can\'t break our shelter,<br>\'Cause we\'re walking side by side.<br>Where your hope becomes my heartbeat,<br>And your sorrow becomes my song…<br>In the place where our dreams become one.'
+    },
+    home: {
+      title: 'Something In You Feels Like Home',
+      chorus: 'Something in you feels like home,<br>Even though we walk this road alone.<br>I don\'t understand it, but I know—<br>My wandering heart has found its glow.<br>Something in you feels like home,<br>Like a truth my soul has always known.'
+    }
+  };
+  var lyricsOverlay = document.getElementById('lyricsOverlay');
+  function openLyrics(key){
+    var song = LYRIC_EXCERPTS[key];
+    if (!song) return;
+    document.getElementById('lyricsBody').innerHTML =
+      '<span class="label eyebrow-tag">Lyric Excerpt</span>' +
+      '<h3>' + song.title + '</h3>' +
+      '<div class="lyrics-meta">Lovewave Harmony Music</div>' +
+      '<span class="chorus-label">Chorus</span>' +
+      '<p class="chorus-text">' + song.chorus + '</p>' +
+      '<p class="lyrics-note">Full lyrics available on request — <a href="mailto:contact@lovewaveharmonymusic.com?subject=Lyrics request">contact@lovewaveharmonymusic.com</a></p>';
+    lyricsOverlay.hidden = false;
+  }
+  function closeLyrics(){ lyricsOverlay.hidden = true; }
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('[data-lyrics]');
+    if (trigger){ e.preventDefault(); openLyrics(trigger.getAttribute('data-lyrics')); }
+  });
+  document.getElementById('lyricsClose').addEventListener('click', closeLyrics);
+  lyricsOverlay.addEventListener('click', function(e){ if (e.target === lyricsOverlay) closeLyrics(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !lyricsOverlay.hidden) closeLyrics(); });
 
   // demo form confirmations (no backend — prototype only)
   document.getElementById('subForm').addEventListener('submit', function(e){
