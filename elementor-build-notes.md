@@ -41,7 +41,7 @@ Full-width sticky section, 82%-opacity plum background. Three-column inner row: 
 Full-width section, height sized to content (not 100vh) — roughly 600–650px desktop, auto height on mobile. Background: gradient overlay + Section Background video (Elementor supports a native looping muted background video here). Content: H1 Heading (Playfair Display), Text Editor sub-headline, two Buttons ("Listen to the Latest Single" gold, "Watch on YouTube" outline).
 
 ### 3. Listen Bar
-Surface-color section. Row of 4 Button/Icon Box widgets (Spotify, Apple Music, YouTube Music, Amazon Music), wraps automatically on mobile. Plus one more Button, "Pre-save Next Single" — **needs the real Hyperfollow/DistroKid URL** (see link list below).
+Surface-color section. Row of 4 Button/Icon Box widgets (Spotify, Apple Music, YouTube Music, Amazon Music), wraps automatically on mobile. Plus one more Button, "Pre-save Next Single", linking to the DistroKid Hyperfollow URL.
 
 ### 4. Sticky mini-player
 No native Elementor equivalent. Two options: skip for launch (cleanest), or port the prototype's custom HTML/CSS/JS into an Elementor HTML widget (works, but Elementor can't visually edit it). Recommendation: ship without it, revisit as a v2 polish item.
@@ -63,7 +63,7 @@ Three Icon Box widgets side by side (title, mood, description, "Read lyrics" lin
 Three native **Video** widgets (Elementor's built-in YouTube widget) — paste each YouTube URL directly. On the real site these give true inline playback with YouTube's own thumbnail, unlike the prototype's click-through cards (which exist there only because the artifact preview's sandbox blocks framing external sites).
 
 ### 9. Playlists
-Three Icon Box widgets, each with a single YouTube-icon Button linking to its real playlist. **Add a matching Spotify icon here once you have Spotify playlist links** (see list below) — the prototype currently shows YouTube only.
+Two Icon Box widgets per card — Spotify and YouTube — each linking to that mood's real playlist on the respective platform.
 
 ### 10. About
 Two-column section: Image widget (the Rhodes piano/mic photo) | Text Editor (short + long bio) + Button ("License" → opens a Popup, see below).
