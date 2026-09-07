@@ -441,7 +441,7 @@
 <div class="mini-player" id="miniPlayer">
   <div class="disc" id="miniDisc"></div>
   <div class="meta"><div class="t">When Beauty Stole My Heart</div><div class="s">Lovewave Harmony Music</div></div>
-  <button class="play" id="miniPlayBtn" aria-label="Play preview">
+  <button class="play" id="miniPlayBtn" aria-label="Play on YouTube (opens in a new tab)" title="Play on YouTube">
     <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z"/></svg>
   </button>
 </div>
@@ -465,7 +465,7 @@
           </ul>
           <div class="embed">
             <div class="top">
-              <button class="playbtn" id="spotPlayBtn" aria-label="Play preview">
+              <button class="playbtn" id="spotPlayBtn" aria-label="Play on YouTube (opens in a new tab)" title="Play on YouTube">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path id="spotIcon" d="M4 2.5v11l10-5.5z"/></svg>
               </button>
               <div class="track-line">
@@ -959,24 +959,27 @@
   }, {passive:true});
 
   // shared play/disc-spin wiring
-  function wirePlayer(btn, iconPath, discEl, onTick){
+  var BEAUTY_VIDEO = 'https://www.youtube.com/watch?v=w8gVHg94wy0';
+  function wirePlayer(btn, iconPath, discEl, onTick, audioUrl){
     var playing = false, t = 0, timer = null;
     btn.addEventListener('click', function(){
       playing = !playing;
       if (iconPath) iconPath.setAttribute('d', playing ? 'M4 2h3v12H4zM9 2h3v12H9z' : 'M4 2.5v11l10-5.5z');
       btn.classList.toggle('active', playing);
       if (discEl) discEl.classList.toggle('spinning', playing);
-      if (playing){ timer = setInterval(function(){ t += 1; onTick && onTick(t); }, 200); }
-      else if (timer){ clearInterval(timer); }
+      if (playing){
+        timer = setInterval(function(){ t += 1; onTick && onTick(t); }, 200);
+        if (audioUrl) window.open(audioUrl, '_blank', 'noopener');
+      } else if (timer){ clearInterval(timer); }
     });
   }
-  wirePlayer(document.getElementById('miniPlayBtn'), document.getElementById('miniPlayBtn').querySelector('path'), document.getElementById('miniDisc'));
+  wirePlayer(document.getElementById('miniPlayBtn'), document.getElementById('miniPlayBtn').querySelector('path'), document.getElementById('miniDisc'), null, BEAUTY_VIDEO);
   wirePlayer(document.getElementById('spotPlayBtn'), document.getElementById('spotIcon'), document.getElementById('coverSpotlight').querySelector('.disc-group'), function(t){
     var pct = Math.min(100, (t/110)*100);
     document.getElementById('spotBar').style.width = pct + '%';
     var secs = Math.min(222, Math.floor(t*2));
     document.getElementById('spotTime').textContent = Math.floor(secs/60) + ':' + String(secs%60).padStart(2,'0');
-  });
+  }, BEAUTY_VIDEO);
   topSongs.forEach(function(s,i){
     var wrapEl = document.getElementById('song-disc-'+i);
     wrapEl.addEventListener('click', function(){ wrapEl.classList.toggle('spinning'); });
