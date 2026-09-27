@@ -88,13 +88,13 @@
   .hero-bg{position:absolute; inset:0; z-index:-4; background:radial-gradient(ellipse at 30% 20%, #241533 0%, var(--bg) 65%);}
   .hero-photo{
     position:absolute; inset:0; z-index:-3; background-size:cover; background-position:center 30%;
-    filter:saturate(.9) brightness(.88) contrast(1.04) sepia(.08) hue-rotate(-8deg);
+    filter:saturate(1) brightness(1.02) contrast(1.02) sepia(.04) hue-rotate(-5deg);
   }
   .hero-tint{
     position:absolute; inset:0; z-index:-2;
     background:
-      linear-gradient(100deg, rgba(26,16,37,.93) 0%, rgba(26,16,37,.62) 34%, rgba(26,16,37,.22) 60%, rgba(26,16,37,.4) 100%),
-      linear-gradient(180deg, rgba(26,16,37,.3) 0%, rgba(26,16,37,.04) 35%, rgba(26,16,37,.5) 100%);
+      linear-gradient(100deg, rgba(26,16,37,.82) 0%, rgba(26,16,37,.45) 34%, rgba(26,16,37,.1) 60%, rgba(26,16,37,.24) 100%),
+      linear-gradient(180deg, rgba(26,16,37,.18) 0%, rgba(26,16,37,.02) 35%, rgba(26,16,37,.32) 100%);
   }
   .bokeh{position:absolute; inset:0; z-index:-1; overflow:hidden;}
   .bokeh span{position:absolute; border-radius:50%; filter:blur(2px); opacity:.35; animation:drift 26s ease-in-out infinite;}
@@ -284,7 +284,7 @@
   .stat-tile .icon{width:24px; height:24px; color:var(--gold); margin-bottom:10px;}
   .stat-tile .num{font-family:var(--serif); font-size:2.3rem; font-weight:700; color:var(--gold); line-height:1;}
   .stat-tile .lbl{margin-top:10px; font-size:.8rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
-  .stats-note{margin-top:24px; font-size:.85rem; color:var(--ink-soft); text-align:center;}
+  .stats-note{margin-top:24px; font-size:.85rem; color:var(--ink-soft); text-align:center; max-width:none;}
   @media (max-width:520px){ .stat-tile .num{font-size:1.95rem;} }
   .mood-card .links a{width:36px; height:36px; border:1px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);}
   .mood-card .links svg{width:16px; height:16px;}
@@ -750,7 +750,11 @@
     <div class="foot-top">
       <div class="brand" style="align-items:flex-start;">
         <span class="mark mark-slot" aria-hidden="true"></span>
-        <div class="brand-text"><div class="name">Lovewave Harmony Music</div><div class="tag">Soft. Heartfelt. Yours.</div></div>
+        <div class="brand-text">
+          <div class="name">Lovewave Harmony Music</div>
+          <div class="tag">Soft. Heartfelt. Yours.</div>
+          <div class="visitor-counter"><span class="dot" aria-hidden="true"></span><span id="visitorCountWrap">&#8212; visitors and counting</span></div>
+        </div>
       </div>
       <div class="foot-links">
         <div class="col"><h5>Listen</h5>
@@ -767,7 +771,6 @@
     <div class="foot-bottom">
       <div>
         <small>&#169; 2026 Lovewave Harmony Music | Originals | contact@lovewaveharmonymusic.com | <a href="#" data-privacy style="color:inherit; text-decoration:underline;">Privacy</a></small>
-        <div class="visitor-counter"><span class="dot" aria-hidden="true"></span><span id="visitorCountWrap">&#8212; visitors and counting</span></div>
         <div class="legal-line">All songs are original compositions. AI tools used in production arrangement.</div>
         <div class="legal-line ip-notice">All music, songs, lyrics, melodies, arrangements, sound recordings, artwork, videos, images, text, and designs on this website are original works owned exclusively by Lovewave Harmony Music. Copyright &#169; 2026 Lovewave Harmony Music. All rights reserved. No part of this website or its music catalogue may be copied, reproduced, distributed, performed, broadcast, uploaded, sampled, remixed, translated, adapted, synchronized to video, used to train AI models, or exploited in any form or medium without prior express written permission. Some compositions were created with AI assistance as a production tool; to the fullest extent permitted by law, all rights in those original compositions and recordings are claimed and owned by Lovewave Harmony Music. Unauthorized use is strictly prohibited and may result in takedown notices and legal action. To request permission or a license, contact <a href="mailto:contact@lovewaveharmonymusic.com" style="color:var(--gold);">contact@lovewaveharmonymusic.com</a>.</div>
       </div>
