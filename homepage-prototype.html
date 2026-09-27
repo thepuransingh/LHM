@@ -87,14 +87,14 @@
   .hero{position:relative; padding:96px 0 88px; overflow:hidden; isolation:isolate;}
   .hero-bg{position:absolute; inset:0; z-index:-4; background:radial-gradient(ellipse at 30% 20%, #241533 0%, var(--bg) 65%);}
   .hero-photo{
-    position:absolute; inset:0; z-index:-3; background-size:cover; background-position:center 32%;
-    filter:saturate(.72) brightness(.56) contrast(1.06) sepia(.14) hue-rotate(-10deg);
+    position:absolute; inset:0; z-index:-3; background-size:cover; background-position:center 30%;
+    filter:saturate(.9) brightness(.88) contrast(1.04) sepia(.08) hue-rotate(-8deg);
   }
   .hero-tint{
     position:absolute; inset:0; z-index:-2;
     background:
-      radial-gradient(ellipse at 30% 20%, rgba(36,21,51,.5) 0%, rgba(26,16,37,.86) 68%),
-      linear-gradient(180deg, rgba(26,16,37,.6) 0%, rgba(26,16,37,.4) 42%, rgba(26,16,37,.8) 100%);
+      linear-gradient(100deg, rgba(26,16,37,.93) 0%, rgba(26,16,37,.62) 34%, rgba(26,16,37,.22) 60%, rgba(26,16,37,.4) 100%),
+      linear-gradient(180deg, rgba(26,16,37,.3) 0%, rgba(26,16,37,.04) 35%, rgba(26,16,37,.5) 100%);
   }
   .bokeh{position:absolute; inset:0; z-index:-1; overflow:hidden;}
   .bokeh span{position:absolute; border-radius:50%; filter:blur(2px); opacity:.35; animation:drift 26s ease-in-out infinite;}
@@ -685,6 +685,7 @@
         <form class="subscribe" id="subForm">
           <input type="text" id="subName" required placeholder="Your name" aria-label="Name">
           <input type="email" id="subEmail" required placeholder="you@email.com" aria-label="Email address">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <button type="submit">Join the list</button>
           <span class="form-note" id="subNote"></span>
         </form>
@@ -1168,15 +1169,55 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
   licenseOverlay.addEventListener('click', function(e){ if (e.target === licenseOverlay) closeLicense(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !licenseOverlay.hidden) closeLicense(); });
 
-  // demo form confirmations (no backend \u2014 prototype only)
+  // mailing list signup \u2014 delivered by Web3Forms (free, no backend needed)
+  // Setup (one time, ~2 minutes): go to https://web3forms.com, enter
+  // contact@lovewaveharmonymusic.com, click "Create Access Key", and paste
+  // the key you receive by email into WEB3FORMS_ACCESS_KEY below.
+  var WEB3FORMS_ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE';
   document.getElementById('subForm').addEventListener('submit', function(e){
     e.preventDefault();
+    var form = e.target;
     var name = document.getElementById('subName').value;
     var email = document.getElementById('subEmail').value;
-    var subject = encodeURIComponent('New Subscriber');
-    var body = encodeURIComponent('New mailing list signup from the website:\n\nName: ' + name + '\nEmail: ' + email);
-    window.location.href = 'mailto:contact@lovewaveharmonymusic.com?subject=' + subject + '&body=' + body;
-    document.getElementById('subNote').textContent = 'Almost done \u2014 send the email that just opened to finish signing up.';
+    var note = document.getElementById('subNote');
+    var btn = form.querySelector('button[type="submit"]');
+
+    if (form.botcheck.checked) return; // spam honeypot
+
+    if (WEB3FORMS_ACCESS_KEY === 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE'){
+      note.textContent = 'Signup form is not fully set up yet \u2014 please email us directly at contact@lovewaveharmonymusic.com.';
+      return;
+    }
+
+    btn.disabled = true;
+    note.textContent = 'Sending\u2026';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: 'New Subscriber',
+        from_name: 'Lovewave Harmony Music \u2014 website signup',
+        name: name,
+        email: email,
+        message: 'New mailing list signup from the website.\n\nName: ' + name + '\nEmail: ' + email
+      })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        btn.disabled = false;
+        if (data.success){
+          note.textContent = 'You\u2019re on the list \u2014 welcome!';
+          form.reset();
+        } else {
+          note.textContent = 'Something went wrong \u2014 please email us directly at contact@lovewaveharmonymusic.com.';
+        }
+      })
+      .catch(function(){
+        btn.disabled = false;
+        note.textContent = 'Something went wrong \u2014 please email us directly at contact@lovewaveharmonymusic.com.';
+      });
   });
 
   // scroll-reveal: fade/rise section content into view as you scroll
