@@ -277,6 +277,13 @@
   .mood-card h4{font-size:1.15rem; margin-bottom:8px;}
   .mood-card p{color:var(--ink-soft); font-size:.88rem; margin-bottom:16px;}
   .mood-card .links{display:flex; gap:10px;}
+
+  /* ---- by the numbers ---- */
+  .stats-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:24px;}
+  .stat-tile{text-align:center; background:var(--bg-2); border:1px solid var(--line); border-radius:8px; padding:34px 20px;}
+  .stat-tile .num{font-family:var(--serif); font-size:2.5rem; font-weight:700; color:var(--gold); line-height:1;}
+  .stat-tile .lbl{margin-top:10px; font-size:.82rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+  @media (max-width:520px){ .stat-tile .num{font-size:2.1rem;} }
   .mood-card .links a{width:36px; height:36px; border:1px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);}
   .mood-card .links svg{width:16px; height:16px;}
 
@@ -325,6 +332,11 @@
   .foot-bottom .socials a{width:34px; height:34px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--gold);}
   .foot-bottom .socials svg{width:15px; height:15px;}
   .foot-bottom small{color:var(--ink-soft); font-size:.8rem;}
+  .visitor-counter{display:inline-flex; align-items:center; gap:7px; margin-top:12px; font-size:.78rem; color:var(--ink-soft);}
+  .visitor-counter .dot{width:6px; height:6px; border-radius:50%; background:var(--gold); flex:0 0 auto; animation:pulseDot 2.4s ease-in-out infinite;}
+  .visitor-counter b{color:var(--gold); font-weight:700; font-family:var(--serif);}
+  @keyframes pulseDot{0%,100%{opacity:.4; transform:scale(.85);} 50%{opacity:1; transform:scale(1);}}
+  @media (prefers-reduced-motion:reduce){ .visitor-counter .dot{animation:none;} }
   .legal-line{font-size:.78rem; color:var(--ink-soft); margin-top:6px;}
 
   /* ---- lyric excerpt modal ---- */
@@ -634,6 +646,16 @@
     </div>
   </section>
 
+  <section id="stats">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="label">By the Numbers</span><h2>A Growing Family</h2></div>
+      <div class="stats-grid reveal">
+        <div class="stat-tile"><div class="num" data-count="17000" data-suffix="+">0</div><div class="lbl">Facebook Followers</div></div>
+        <div class="stat-tile"><div class="num" data-count="19">0</div><div class="lbl">Albums Released</div></div>
+      </div>
+    </div>
+  </section>
+
   <section class="bg-2" id="about">
     <div class="wrap">
       <div class="sec-head reveal"><span class="label">Our Story</span><h2>About</h2></div>
@@ -716,6 +738,7 @@
     <div class="foot-bottom">
       <div>
         <small>&#169; 2026 Lovewave Harmony Music | Originals | contact@lovewaveharmonymusic.com | <a href="#" data-privacy style="color:inherit; text-decoration:underline;">Privacy</a></small>
+        <div class="visitor-counter"><span class="dot" aria-hidden="true"></span><span id="visitorCountWrap">&#8212; visitors and counting</span></div>
         <div class="legal-line">All songs are original compositions. AI tools used in production arrangement.</div>
         <div class="legal-line ip-notice">All music, songs, lyrics, melodies, arrangements, sound recordings, artwork, videos, images, text, and designs on this website are original works owned exclusively by Lovewave Harmony Music. Copyright &#169; 2026 Lovewave Harmony Music. All rights reserved. No part of this website or its music catalogue may be copied, reproduced, distributed, performed, broadcast, uploaded, sampled, remixed, translated, adapted, synchronized to video, used to train AI models, or exploited in any form or medium without prior express written permission. Some compositions were created with AI assistance as a production tool; to the fullest extent permitted by law, all rights in those original compositions and recordings are claimed and owned by Lovewave Harmony Music. Unauthorized use is strictly prohibited and may result in takedown notices and legal action. To request permission or a license, contact <a href="mailto:contact@lovewaveharmonymusic.com" style="color:var(--gold);">contact@lovewaveharmonymusic.com</a>.</div>
       </div>
@@ -941,6 +964,28 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
 
   // hero photo
   document.getElementById('heroPhoto').style.backgroundImage = 'url("'+IMG_HERO+'")';
+
+  // visitor counter - persists across redeploys via CountAPI (free, no backend needed).
+  // Counts page loads (not unique people). If the free API is ever unreachable,
+  // this fails silently and keeps the last cached count so the footer never breaks.
+  (function(){
+    var wrap = document.getElementById('visitorCountWrap');
+    if (!wrap) return;
+    function render(n){
+      wrap.innerHTML = '<b>' + Number(n).toLocaleString() + '</b> visitors and counting';
+    }
+    var cached = localStorage.getItem('lwh_visitor_count');
+    if (cached) render(cached);
+    fetch('https://api.countapi.xyz/hit/lovewaveharmonymusic-com/homepage-visits')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data && typeof data.value === 'number'){
+          render(data.value);
+          localStorage.setItem('lwh_visitor_count', data.value);
+        }
+      })
+      .catch(function(){ /* keep cached value or placeholder, no error shown to visitors */ });
+  })();
 
   // top 3 songs data
   var topSongs = [
@@ -1173,7 +1218,7 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
   // Setup (one time, ~2 minutes): go to https://web3forms.com, enter
   // contact@lovewaveharmonymusic.com, click "Create Access Key", and paste
   // the key you receive by email into WEB3FORMS_ACCESS_KEY below.
-  var WEB3FORMS_ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+  var WEB3FORMS_ACCESS_KEY = '3adb46ed-7f23-45aa-afb1-d09f6bd54c2f';
   document.getElementById('subForm').addEventListener('submit', function(e){
     e.preventDefault();
     var form = e.target;
@@ -1233,6 +1278,37 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
     document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // by the numbers: count up on scroll into view
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var statEls = document.querySelectorAll('.stat-tile .num[data-count]');
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduceMotion){ el.textContent = target.toLocaleString() + suffix; return; }
+    var start = null, duration = 1200;
+    function step(ts){
+      if (!start) start = ts;
+      var progress = Math.min(1, (ts - start) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && statEls.length){
+    var statObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          animateCount(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.4});
+    statEls.forEach(function(el){ statObserver.observe(el); });
+  } else {
+    statEls.forEach(animateCount);
   }
 })();
 </script>
