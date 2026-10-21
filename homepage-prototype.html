@@ -538,8 +538,8 @@
 
 <div class="mini-player" id="miniPlayer">
   <div class="disc" id="miniDisc"></div>
-  <div class="meta"><div class="t">A Silent Glance Across The Room</div><div class="s">Lovewave Harmony Music</div></div>
-  <button class="play" id="miniPlayBtn" aria-label="Play music video" title="Video link coming soon" disabled>
+  <div class="meta"><div class="t">Every Beat Of My Heart</div><div class="s">Lovewave Harmony Music</div></div>
+  <button class="play" id="miniPlayBtn" aria-label="Play music video" title="Play music video">
     <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z"/></svg>
   </button>
 </div>
@@ -577,11 +577,11 @@
           </ol>
           <div class="embed">
             <div class="top">
-              <button class="playbtn" id="spotPlayBtn" aria-label="Play music video" title="Video link coming soon" disabled>
+              <button class="playbtn" id="spotPlayBtn" aria-label="Play music video" title="Play music video">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path id="spotIcon" d="M4 2.5v11l10-5.5z"/></svg>
               </button>
               <div class="track-line">
-                <div class="name">A Silent Glance Across The Room &#8212; Track 1</div>
+                <div class="name">Every Beat Of My Heart &#8212; Track 8</div>
                 <div class="bar"><i id="spotBar"></i></div>
               </div>
               <div class="dur" id="spotTime">0:00</div>
@@ -1206,7 +1206,7 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
   });
 
   // shared play/disc-spin wiring - play opens the video modal in place, closing it resets the button
-  var FEATURED_VIDEO_ID = null; // set once a YouTube link for "A Silent Glance Across The Room" is provided; both buttons are disabled until then
+  var FEATURED_VIDEO_ID = 'ihrxgUvH-lU'; // "Every Beat Of My Heart" - Where Tender Hearts Surrender, Track 8
   function wirePlayer(btn, iconPath, discEl, onTick, videoId){
     var playing = false, t = 0, timer = null;
     function setPlaying(v){
