@@ -81,7 +81,7 @@
     header.site-nav .row{padding:14px 20px;}
   }
   @media (min-width:861px){ .mobile-nav{display:none !important;} }
-  @media (max-width:420px){ .brand-text .tag{display:none;} }
+  @media (max-width:1023px){ .brand-text .tag{display:none;} }
 
   /* ---- hero ---- */
   .hero{position:relative; padding:96px 0 88px; overflow:hidden; isolation:isolate;}
@@ -458,6 +458,7 @@
     <nav class="nav-links">
       <a href="#top">Home</a>
       <a href="#music">Music</a>
+      <a href="#albums">Albums</a>
       <a href="#videos">Videos</a>
       <a href="#playlists">Playlists</a>
       <a href="#about">About</a>
@@ -480,6 +481,7 @@
   <nav class="mobile-nav" id="mobileNav" hidden>
     <a href="#top">Home</a>
     <a href="#music">Music</a>
+    <a href="#albums">Albums</a>
     <a href="#videos">Videos</a>
     <a href="#playlists">Playlists</a>
     <a href="#about">About</a>
@@ -803,7 +805,7 @@
           <a href="https://music.amazon.com/artists/B0GRMDDGT2/lovewave-harmony-music" target="_blank" rel="noopener">Amazon Music</a>
         </div>
         <div class="col"><h5>Site</h5>
-          <a href="#music">Music</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#" data-privacy>Privacy</a>
+          <a href="#music">Music</a><a href="#albums">Albums</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#" data-privacy>Privacy</a>
         </div>
       </div>
     </div>
@@ -1206,10 +1208,25 @@ var IMG_ALBUM20 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBA
     navToggle.setAttribute('aria-expanded', String(open));
   });
   mobileNav.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href') || '';
       mobileNav.hidden = true;
       navToggle.classList.remove('open');
       navToggle.setAttribute('aria-expanded', 'false');
+      if (href.charAt(0) === '#' && href.length > 1){
+        e.preventDefault();
+        var target = document.querySelector(href);
+        if (target){
+          // wait for the collapsing nav panel to leave the layout before
+          // scrolling, so the jump lands on the right section instead of
+          // racing the panel's collapse and overshooting it
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              target.scrollIntoView({block:'start'});
+            });
+          });
+        }
+      }
     });
   });
   window.addEventListener('resize', function(){
