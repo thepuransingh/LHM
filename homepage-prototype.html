@@ -251,10 +251,10 @@
   .collection-grid .cap .y{font-size:.72rem; color:var(--ink-soft);}
 
   /* ---- albums (flip cards) ---- */
-  .albums-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:22px;}
+  .albums-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px,1fr)); gap:22px;}
   .album-card{perspective:1200px; cursor:pointer;}
   .album-flip{
-    position:relative; width:100%; aspect-ratio:1/1.45; transform-style:preserve-3d;
+    position:relative; width:100%; aspect-ratio:1/1.6; transform-style:preserve-3d;
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
   .album-card.flipped .album-flip{transform:rotateY(180deg);}
@@ -262,11 +262,19 @@
     position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
     border-radius:8px; border:1px solid var(--line); overflow:hidden; background:var(--bg-2);
   }
-  .album-front img{width:100%; height:80%; object-fit:cover; display:block;}
-  .album-title{padding:8px 10px; font-size:.82rem; font-weight:700; font-family:var(--serif); color:var(--ink); line-height:1.25;}
-  .album-back{transform:rotateY(180deg); padding:12px 13px 8px; display:flex; flex-direction:column;}
-  .album-back-title{font-size:.76rem; font-weight:700; color:var(--gold); margin-bottom:6px; font-family:var(--serif); line-height:1.2; flex:0 0 auto;}
-  .album-tracklist{list-style:none; margin:0; padding:0; font-size:.62rem; color:var(--ink-soft); overflow-y:auto; flex:1; counter-reset:atrack;}
+  .album-front img{width:100%; height:68%; object-fit:cover; display:block;}
+  .album-title{
+    padding:7px 10px 0; font-size:.78rem; font-weight:700; font-family:var(--serif); color:var(--ink);
+    line-height:1.2; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .album-meta{padding:2px 10px 0; font-size:.62rem; color:var(--gold);}
+  .album-back{transform:rotateY(180deg); padding:11px 13px 8px; display:flex; flex-direction:column;}
+  .album-back-title{
+    font-size:.72rem; font-weight:700; color:var(--gold); font-family:var(--serif); line-height:1.2;
+    flex:0 0 auto; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .album-back-meta{font-size:.6rem; color:var(--ink-soft); margin:2px 0 6px; flex:0 0 auto;}
+  .album-tracklist{list-style:none; margin:0; padding:0; font-size:.6rem; color:var(--ink-soft); overflow-y:auto; flex:1; counter-reset:atrack;}
   .album-tracklist li{counter-increment:atrack; display:flex; gap:4px; padding:1.5px 0; line-height:1.2;}
   .album-tracklist li::before{content:counter(atrack, decimal-leading-zero) '.'; color:var(--gold); flex:0 0 auto;}
   .album-tracklist::-webkit-scrollbar{width:4px;}
@@ -1116,29 +1124,47 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
     collectionGrid.appendChild(item);
   }
 
-  // albums grid - 20 sample flip cards (same placeholder cover + sample tracklist for
-  // now); replace one by one with real cover art, titles and tracklists as they're sent.
-  var SAMPLE_ALBUM_TRACKS = [
-    'A Silent Glance Across The Room','Stealing Glances In The Dark','Bound To Fall In Love',
-    'Should I Give My Heart Away','Tell Me Where My Heart Belongs','This Foolish Heart Of Mine',
-    'A Work Of Heavenly Art','Every Beat Of My Heart','Spellbound In The Quiet Night',
-    'I Can\'t Stay Away From You','The House That Heartbreak Built','Growing Deeper Every Day'
+  // albums grid - real album title, release date and 12-track tracklist per album;
+  // flip cards still share placeholder cover art except where real art already exists
+  // (Where Tender Hearts Surrender, The Heart That Chose You) until real covers are sent.
+  var ALBUMS = [
+    {title:"Lovewave Motown Sessions, Vol. 1", date:"Mar 12, 2026", img:IMG_TENDER_HEARTS, tracks:["Where Do You Think You're Going?", "Living Ain't Living Without You", "Miles of Empty Nights", "When I Saw Those Rosy Eyes", "Come Back Home to Me", "When You Call, I'll Come Running", "The Weight of Every Hour", "Running With My Own Heart", "Before the Moment Fades", "The Wrong Thing", "The Kind of Love I Never Found", "You Feel Like the Place I Was Meant to Be"]},
+    {title:"Lovewave Motown Sessions Vol. 2", date:"Mar 17, 2026", img:IMG_TENDER_HEARTS, tracks:["If You Must Break Me, Do It Slow", "Where the Evening Learns My Name", "Say It With Your Eyes", "The Hurt That Has No Name", "When Time Turned Us Into Strangers", "The Fire That Never Fades", "The World Ain't Built in Full", "When Your Eyes Chose Me", "The Quiet That Never Answers", "Maybe This Is Love After All", "Back When Your Heart Knew Mine", "The Night Knows Where You Belong"]},
+    {title:"Lovewave Motown Sessions Vol. 3", date:"Mar 12, 2026", img:IMG_TENDER_HEARTS, tracks:["Without Your Heartbeat Near Me", "Stay Until the Night Forgets Us", "Buried in the Quiet", "Heart, Don't Run Ahead", "Life, You Leave Me Wondering", "When Your Smile Feels Heavy", "Don't Turn Away From This Love", "The Road I Walk Alone", "Where the Light Can't Reach Me", "Shadows in the Dreamlight", "Letter I Can't Outrun", "The Hurt That Has No Name"]},
+    {title:"Lovewave Echoes of a Golden Heart", date:"Mar 20, 2026", img:IMG_TENDER_HEARTS, tracks:["Don't Leave Me To the Quiet", "When Your Memory Found Me Tonight", "One More Evening With You", "Nothing Left To Call My Own", "When the World Was Small", "The Way You Hold the Light", "Carry My Heart Into Forever", "The Quiet Between Your Heartbeats", "Don't Let This Moment Fall Apart", "When the Light Came Back To My Window", "I Can't Love Like I Did Before", "Walk Me Through the Fire Like a King"]},
+    {title:"Echoes From the Roads We Walked", date:"Mar 27, 2026", img:IMG_TENDER_HEARTS, tracks:["When the Fire Learns To Burn the Rain", "Lose Myself In Your Name", "We Walked Together, but Never the Same", "When the World Was Soft Enough To Hold", "What My Heart Learned To Let Go", "If Your Heart Can Hear My Quiet Name", "The Night the Sky Remembered Us", "Where Did Your Shadow Go Tonight", "When We Walked That Road Together", "When the Memory Turned and Looked At Me", "When the Evening Came Back Empty", "When the Heart Couldn't Hold It Anymore"]},
+    {title:"Before the Night Ends", date:"Apr 10, 2026", img:IMG_TENDER_HEARTS, tracks:["The Night I Found the Words Too Late", "Call My Name If You Can Hear My Heart", "Don't Call Me Back To Who I Used To Be", "The Night Is Set - Just Come To Me", "Where My Heart Belongs Is Only You", "If You Keep Coming Close Like This", "Someone's Coming Down This Night", "Open Up Your Heart Tonight", "I Swear I Don't Love You", "Don't Leave Me Tonight", "When I See Her Today", "Hear the Song My Heart Is Singing"]},
+    {title:"When Our Hearts Speak", date:"Apr 24, 2026", img:IMG_TENDER_HEARTS, tracks:["I'll Hold You Close, I'll Keep You Safe", "Why Does Your Eyes Look Away From Me", "Tonight I Give My Heart and Walk Away", "Listen To the Voice Of My Heart", "A Window In My Heart Is Still Open", "Whispers Hiding In Your Eyes", "Where Our Dreams Become One", "The Paths My Heart Refuses", "When My Eyes Found You", "I'm Done With Falling, I'm Built To Rise", "Lock You In My Heart and Lose the Key", "This Evening Feels Like You"]},
+    {title:"When Memory Speaks", date:"May 8, 2026", img:IMG_TENDER_HEARTS, tracks:["My Heart Still Calls Your Name", "This Empty Life Of Mine", "The Dream That Left Me Crying", "When My Heart Starts To Fly", "When Beauty Stole My Heart", "Take Me Where the Moonlight Lives", "Let Me Tell You What Love Did To Me", "Why Did Your Eyes Turn Away?", "Take My Heart Before I Go", "You're More Beautiful Than I Can Say", "The Song My Heart Was Born To Sing", "When Your Memory Finds Me Again"]},
+    {title:"The Heart That Wouldn't Stay Silent", date:"May 22, 2026", img:IMG_TENDER_HEARTS, tracks:["Nothing In This World Can Quiet My Heart", "Hold My Heart, Don't Let It Hide", "Something In You Feels Like Home", "My Heart Is Ready, Come To Me", "This Night, This River, and You", "Let My Heart Find Peace", "Don't Let This Fire Go Wild", "I Couldn't Be the Man You Needed", "I Won't Risk My Heart Again", "My Dreams Dissolved In Tears", "When You Turned and Left Me Bleeding", "I Walked Away Because I Had To"]},
+    {title:"Where My Heart Learned to Break", date:"Jun 5, 2026", img:IMG_TENDER_HEARTS, tracks:["Without Your Heart, I Can't Find Mine", "My Winged One, Where Did You Go?", "How Does a Heart Like Mine Survive You", "Come Back Before I Fall Apart", "Take Me Where the Starlight Falls", "Why'd Your Eyes Turn Away From Me", "Tell Her To Let Me Go", "You Are Where My Life Begins", "I Loved You Like a Temple Made Of Light", "Don't Let This Moment Ever End", "Why Does Forever Change?", "I Still Break When No One Sees"]},
+    {title:"Shadows That Still Know My Name", date:"Jun 19, 2026", img:IMG_TENDER_HEARTS, tracks:["The Night Kept Calling Your Name", "Tonight, Let My Heart Bow To You", "Something Inside Me Shook Tonight", "In the Shelter Of Your Evening Light", "When the Night Gets Close, I Fall Apart", "Your Eyes Started Something Beautiful", "When Someone Like You Finds My Heart", "When Your Memory Walks Through My Shadows", "Don't Let Your Silence Take You From Me", "Somewhere, Someone Is Crying My Name", "I'd Give My Life Before I Let You Go", "Fell From My Heart, and I Can't Lift You Back"]},
+    {title:"The Things My Heart Never Survived", date:"Jul 3, 2026", img:IMG_TENDER_HEARTS, tracks:["While You Slept, I Broke", "Your Laughter Cut Me Deeper Than Goodbye", "You Made Me Yours, Then Made Me Nothing", "Every Promise Has a Price", "The Price Of Loving You", "I Never Gave My Heart To Break", "The Only Thing That Held Me", "I've Learned To Miss You Slowly", "Heart, Please Quiet Down", "As Long As My Eyes Still Cry", "Why Does Forever Change?", "Every Breath Still Calls Your Name"]},
+    {title:"When My Heart Learned to Rise Again", date:"Jul 17, 2026", img:IMG_TENDER_HEARTS, tracks:["You Walked Away With Everything", "I Knew Your Heart Was Breaking Too", "Your Memory Won't Let Me Go", "The More I Knew You, the More I Fell", "Girl, You Turn My Midnights Gold", "I'm Living Because I Can't Let Go", "Don't Turn Me Into a Stranger", "You Made My Heart Feel Like Home", "My Heart Started To Fly", "I Keep Loving You From Far Away", "Don't Let Go When I Fall", "When the Heavens Opened for You"]},
+    {title:"The Love That Still Lives in Me", date:"Jul 31, 2026", img:IMG_TENDER_HEARTS, tracks:["The Fragrance Of Your Gaze", "When She Walked Into My Light", "When Your Eyes Undid Me", "Between Our Heartbeats", "Only Your Name Remains", "When Our Breaths Became Light", "You Still Live In My Breath", "More Than a Lifetime With You", "You Live In Everything I Feel", "My Future Belongs To You", "The Love I Should Have Kept", "The Flame I Kept for You"]},
+    {title:"After the Heartbreak, Life Began", date:"Aug 14, 2026", img:IMG_TENDER_HEARTS, tracks:["The Love That Broke Me Open", "When My Heart Woke Up Again", "Hold Me, Life", "Without Your Breath", "Love Will Find Our Road", "When Quiet Finds Our Hearts", "When You Turn My Sky To Gold", "Strange How the Days Unfold", "The Way Life Moves Through Me", "Walking Through the Thorns", "Heartbreak In the Half-light", "When You Walked Into the Room"]},
+    {title:"After You", date:"Aug 28, 2026", img:IMG_TENDER_HEARTS, tracks:["I Loved You From the Shadows", "Where Did Your Promise Go?", "Rain That Knows My Name", "You Live In My Silence", "Heart On Your Doorstep", "When the Moon Won't Let Me Sleep", "Ashes In My Hands", "Hold Me 'Til I'm Brave", "I'd Come Back For You", "When My Heart Turns Back", "Closer Than My Own Heartbeat", "All I Am Is You"]},
+    {title:"The Heart That Chose You", date:"Sep 11, 2026", img:IMG_HEART_CHOSE_YOU, tracks:["Why Did My Heart Choose You?", "I Went Searching for Forever", "Made of You", "You're Why My Heart Still Moves", "My Heart Won't Let You Go", "When the Rain Calls Your Name", "My Heart Keeps Breathing Your Name", "Your Heart Has Spoken My Name", "I'll Still Be Loving You Tomorrow", "Stay Till My Heart Stops Shaking", "Don't Let My Forever Break", "You're The Breath I Can't Replace"]},
+    {title:"Where Our Story Learned to Stay", date:"Sep 25, 2026", img:IMG_TENDER_HEARTS, tracks:["I Give My Heart Where I Can't Return", "I Pretend I'm Fine Without Your Name", "I'm Not My Own Anymore", "Hold This Moment While It Breathes", "My Love Lives Where You Don't", "Believe Me Before I Break", "I'll Love You Through Whatever Comes", "Make My Destiny Her Name", "Where Our Story Learned to Stay", "Written in the Quiet of My Sky", "The Echo That Answers My Cry", "The Miracle That Found My Name"]},
+    {title:"Tears Behind the Groove", date:"Oct 9, 2026", img:IMG_TENDER_HEARTS, tracks:["Between the Bottle and Your Door", "That's How I Know It's Love", "My Arms are Always Open Wide", "Cheap Talk and Broken Vows", "What Makes A Foolish Heart Stay", "When the Silence Takes the Room", "When Our Worlds Collide", "Frozen in the Shadows", "Where Did Your Promises Go", "Every Beat Inside My Chest", "When A Beautiful Stranger Walked My Way", "Carried On The Midnight Air"]},
+    {title:"Where Tender Hearts Surrender", date:null, img:IMG_TENDER_HEARTS, tracks:["A Silent Glance Across The Room", "Stealing Glances In The Dark", "Bound To Fall In Love", "Should I Give My Heart Away", "Tell Me Where My Heart Belongs", "This Foolish Heart Of Mine", "A Work Of Heavenly Art", "Every Beat Of My Heart", "Spellbound In The Quiet Night", "I Can't Stay Away From You", "The House That Heartbreak Built", "Growing Deeper Every Day"]},
   ];
   var albumsGrid = document.getElementById('albumsGrid');
-  for (var a = 1; a <= 20; a++){
-    var albumLabel = 'Album ' + String(a).padStart(2, '0');
+  ALBUMS.forEach(function(album, idx){
+    var num = String(idx + 1).padStart(2, '0');
+    var meta = 'Album ' + num + (album.date ? ' - ' + album.date : '');
     var albumCard = document.createElement('div');
     albumCard.className = 'album-card';
     albumCard.innerHTML =
       '<div class="album-flip">' +
-        '<div class="album-face album-front"><img src="' + IMG_TENDER_HEARTS + '" alt="' + albumLabel + ' cover art"><div class="album-title">' + albumLabel + '</div></div>' +
-        '<div class="album-face album-back"><div class="album-back-title">' + albumLabel + '</div><ol class="album-tracklist">' +
-          SAMPLE_ALBUM_TRACKS.map(function(t){ return '<li>' + t + '</li>'; }).join('') +
+        '<div class="album-face album-front"><img src="' + album.img + '" alt="' + album.title + ' cover art"><div class="album-title">' + album.title + '</div><div class="album-meta">' + meta + '</div></div>' +
+        '<div class="album-face album-back"><div class="album-back-title">' + album.title + '</div><div class="album-back-meta">' + meta + '</div><ol class="album-tracklist">' +
+          album.tracks.map(function(t){ return '<li>' + t + '</li>'; }).join('') +
         '</ol></div>' +
       '</div>';
     albumCard.addEventListener('click', function(){ this.classList.toggle('flipped'); });
     albumsGrid.appendChild(albumCard);
-  }
+  });
   document.getElementById('filterRow').addEventListener('click', function(e){
     var btn = e.target.closest('.filter-btn');
     if (!btn) return;
@@ -1364,7 +1390,7 @@ var IMG_HERO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFB
           revealObserver.unobserve(entry.target);
         }
       });
-    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    }, {threshold:0, rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
